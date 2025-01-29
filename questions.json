@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "text": "What's your ideal date night?",
+    "options": [
+      { "id": "a", "text": "Romantic dinner" },
+      { "id": "b", "text": "Movie night" },
+      { "id": "c", "text": "Adventure activity" },
+      { "id": "d", "text": "Cozy night in" }
+    ]
+  },
+  {
+    "id": 2,
+    "text": "How do you prefer to spend a weekend?",
+    "options": [
+      { "id": "a", "text": "Exploring nature" },
+      { "id": "b", "text": "Shopping or city exploring" },
+      { "id": "c", "text": "Binge-watching shows" },
+      { "id": "d", "text": "Catching up on hobbies" }
+    ]
+  },
+  {
+    "id": 3,
+    "text": "What type of vacation excites you most?",
+    "options": [
+      { "id": "a", "text": "Relaxing on a beach" },
+      { "id": "b", "text": "Exploring a new city" },
+      { "id": "c", "text": "Hiking and outdoor adventures" },
+      { "id": "d", "text": "Visiting family or friends" }
+    ]
+  },
+  {
+    "id": 4,
+    "text": "What's your favorite type of cuisine?",
+    "options": [
+      { "id": "a", "text": "Italian" },
+      { "id": "b", "text": "Mexican" },
+      { "id": "c", "text": "Asian" },
+      { "id": "d", "text": "American" }
+    ]
+  },
+  {
+    "id": 5,
+    "text": "What's your go-to movie genre?",
+    "options": [
+      { "id": "a", "text": "Romantic" },
+      { "id": "b", "text": "Action" },
+      { "id": "c", "text": "Comedy" },
+      { "id": "d", "text": "Documentary" }
+    ]
+  }
+]
