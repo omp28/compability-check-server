@@ -36,7 +36,46 @@ const questions = [
       { id: "d", text: "Cozy night in" },
     ],
   },
-  // Add more questions here
+  {
+    id: 2,
+    text: "How do you prefer to spend a weekend?",
+    options: [
+      { id: "a", text: "Exploring nature" },
+      { id: "b", text: "Shopping or city exploring" },
+      { id: "c", text: "Binge-watching shows" },
+      { id: "d", text: "Catching up on hobbies" },
+    ],
+  },
+  {
+    id: 3,
+    text: "What type of vacation excites you most?",
+    options: [
+      { id: "a", text: "Relaxing on a beach" },
+      { id: "b", text: "Exploring a new city" },
+      { id: "c", text: "Hiking and outdoor adventures" },
+      { id: "d", text: "Visiting family or friends" },
+    ],
+  },
+  {
+    id: 4,
+    text: "What's your favorite type of cuisine?",
+    options: [
+      { id: "a", text: "Italian" },
+      { id: "b", text: "Mexican" },
+      { id: "c", text: "Asian" },
+      { id: "d", text: "American" },
+    ],
+  },
+  {
+    id: 5,
+    text: "What's your go-to movie genre?",
+    options: [
+      { id: "a", text: "Romantic" },
+      { id: "b", text: "Action" },
+      { id: "c", text: "Comedy" },
+      { id: "d", text: "Documentary" },
+    ],
+  },
 ];
 
 // Store active rooms and their states
@@ -273,11 +312,19 @@ io.on("connection", (socket) => {
       currentRoom = room;
       socket.join(roomCode);
 
-      const gameState = room.getGameState();
-      socket.emit("game_state", gameState);
-
       if (room.players.size === 2) {
+        // Both players joined - start the game
         io.to(roomCode).emit("partner_connected");
+        // Send first question
+        const questionData = room.sendQuestion();
+        io.to(roomCode).emit("question", questionData);
+      } else {
+        // First player - waiting state
+        socket.emit("game_state", {
+          gameStatus: "waiting",
+          currentQuestion: 0,
+          totalQuestions: questions.length,
+        });
       }
     } else {
       socket.emit("error", "Could not join room");
