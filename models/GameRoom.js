@@ -1,5 +1,6 @@
 const { questions, roomExpiryTime } = require("../config/config");
 const socketService = require("../services/socket");
+const { gameScoring } = require("../services/gameScoring");
 
 class GameRoom {
   constructor(roomCode, hostGender) {
@@ -108,6 +109,9 @@ class GameRoom {
       player.answers.push(answer);
     }
 
+    //  scoring service
+    gameScoring.addAnswer(socketId, this.currentQuestion, answer);
+
     const io = socketService.getIO();
     io.to(this.roomCode).emit("answer_submitted", {
       answeredBy: socketId,
@@ -160,10 +164,19 @@ class GameRoom {
   }
 
   endGame() {
-    const score = this.calculateScore();
+    const gameScore = gameScoring.calculateScore();
     return {
       type: "gameEnd",
-      score,
+      score: gameScore?.score || 0,
+      matchResults: gameScore?.matchResults || [],
+      compatibility: gameScore?.compatibility || {
+        level: "Low",
+        message: "Game ended without enough data",
+      },
+      summary: {
+        totalQuestions: gameScore?.totalQuestions || 0,
+        matchedAnswers: gameScore?.matchedAnswers || 0,
+      },
     };
   }
 
@@ -177,7 +190,7 @@ class GameRoom {
     clearTimeout(this.expiryTimeout);
     clearTimeout(this.questionTimeout);
     clearInterval(this.timerInterval);
-
+    gameScoring.clear();
     rooms.delete(this.roomCode);
   }
 
