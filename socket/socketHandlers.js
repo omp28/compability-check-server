@@ -56,7 +56,7 @@ function setupSocketHandlers() {
               const finalScore = room.endGame();
               io.to(roomCode).emit("game_complete", finalScore);
             }
-          }, 2000);
+          }, 1000);
         }
       }
     });

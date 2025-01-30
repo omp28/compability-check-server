@@ -48,8 +48,10 @@ class GameRoom {
   }
 
   startTimer() {
+    // Clear previous interval if any, to avoid overlaps
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
+      this.timerInterval = null;
     }
 
     this.timeRemaining = 40;
@@ -62,6 +64,7 @@ class GameRoom {
       });
 
       if (this.timeRemaining <= 0) {
+        clearInterval(this.timerInterval);
         this.handleQuestionTimeout();
       }
     }, 1000);
@@ -77,15 +80,22 @@ class GameRoom {
     this.answers.clear();
     this.timeRemaining = 40;
 
+    // Clear any previously set timeouts and intervals
     if (this.questionTimeout) {
       clearTimeout(this.questionTimeout);
+      this.questionTimeout = null;
     }
 
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
+      this.timerInterval = null;
     }
 
     this.startTimer();
+
+    this.questionTimeout = setTimeout(() => {
+      this.handleQuestionTimeout();
+    }, 40 * 1000);
 
     const questionData = {
       type: "question",
@@ -119,7 +129,10 @@ class GameRoom {
     });
 
     if (this.answers.size === 2) {
+      this.timeRemaining = Math.max(0, this.timeRemaining - 3); // 3 second reduction
       clearInterval(this.timerInterval);
+      this.timerInterval = null;
+
       io.to(this.roomCode).emit("both_answered");
 
       this.currentQuestion++;
@@ -129,7 +142,7 @@ class GameRoom {
           const finalScore = this.endGame();
           io.to(this.roomCode).emit("game_complete", finalScore);
         }
-      }, 2000);
+      }, 1000);
     }
 
     return true;
@@ -137,13 +150,26 @@ class GameRoom {
 
   handleQuestionTimeout() {
     console.log(`Question ${this.currentQuestion} timed out`);
-    clearInterval(this.timerInterval);
+
+    // Clean up the current timer properly.
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+      this.timerInterval = null;
+    }
+
+    if (this.questionTimeout) {
+      clearTimeout(this.questionTimeout);
+      this.questionTimeout = null;
+    }
 
     const io = socketService.getIO();
     io.to(this.roomCode).emit("question_timeout");
 
     this.currentQuestion++;
+    this.answers.clear();
+
     setTimeout(() => {
+      this.timeRemaining = 40;
       this.sendQuestion();
     }, 1000);
   }
