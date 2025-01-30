@@ -1,22 +1,5 @@
-const { io } = require("../server");
 const { questions, roomExpiryTime } = require("../config/config");
-
-// class GameRoom {
-//   constructor(roomCode, hostGender) {
-//     this.roomCode = roomCode;
-//     this.players = new Map();
-//     this.currentQuestion = 0;
-//     this.answers = new Map();
-//     this.gameStarted = false;
-//     this.createdAt = Date.now();
-//     this.hostGender = hostGender;
-//     this.timeRemaining = 40;
-//     this.timerInterval = null;
-//     this.expiryTimeout = setTimeout(() => this.handleExpiry(), roomExpiryTime);
-//   }
-
-//   // ... (rest of the GameRoom class methods remain the same)
-// }
+const socketService = require("../services/socket");
 
 class GameRoom {
   constructor(roomCode, hostGender) {
@@ -72,7 +55,7 @@ class GameRoom {
     this.timerInterval = setInterval(() => {
       this.timeRemaining--;
 
-      // Emit timer update to all players
+      const io = socketService.getIO();
       io.to(this.roomCode).emit("timer_update", {
         timeRemaining: this.timeRemaining,
       });
@@ -93,7 +76,6 @@ class GameRoom {
     this.answers.clear();
     this.timeRemaining = 40;
 
-    // Reset question timer
     if (this.questionTimeout) {
       clearTimeout(this.questionTimeout);
     }
@@ -101,10 +83,6 @@ class GameRoom {
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
     }
-
-    // this.questionTimeout = setTimeout(() => {
-    //   this.handleQuestionTimeout();
-    // }, 40 * 1000); // 40 seconds per question
 
     this.startTimer();
 
@@ -116,6 +94,7 @@ class GameRoom {
       timeRemaining: this.timeRemaining,
     };
 
+    const io = socketService.getIO();
     io.to(this.roomCode).emit("question", questionData);
     return questionData;
   }
@@ -129,7 +108,7 @@ class GameRoom {
       player.answers.push(answer);
     }
 
-    // Notify all players about the submission
+    const io = socketService.getIO();
     io.to(this.roomCode).emit("answer_submitted", {
       answeredBy: socketId,
       gameState: this.getGameState(),
@@ -143,7 +122,6 @@ class GameRoom {
       setTimeout(() => {
         const nextQuestion = this.sendQuestion();
         if (!nextQuestion) {
-          // Game is complete
           const finalScore = this.endGame();
           io.to(this.roomCode).emit("game_complete", finalScore);
         }
@@ -157,6 +135,7 @@ class GameRoom {
     console.log(`Question ${this.currentQuestion} timed out`);
     clearInterval(this.timerInterval);
 
+    const io = socketService.getIO();
     io.to(this.roomCode).emit("question_timeout");
 
     this.currentQuestion++;
@@ -189,6 +168,7 @@ class GameRoom {
   }
 
   handleExpiry() {
+    const io = socketService.getIO();
     io.to(this.roomCode).emit("game_expired");
     this.cleanup();
   }
