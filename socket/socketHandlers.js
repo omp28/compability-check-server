@@ -1,6 +1,10 @@
 const { rooms } = require("../models/GameRoom");
+const socketService = require("../services/socket");
+const { questions } = require("../config/config");
 
-function setupSocketHandlers(io) {
+function setupSocketHandlers() {
+  const io = socketService.getIO();
+
   io.on("connection", (socket) => {
     let currentRoom = null;
 
