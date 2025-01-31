@@ -44,6 +44,7 @@ class GameRoom {
   startGame() {
     this.gameStarted = true;
     this.currentQuestion = 0;
+    gameScoring.initializeGame(questions, Array.from(this.players.entries()));
     this.sendQuestion();
   }
 
@@ -149,8 +150,6 @@ class GameRoom {
   }
 
   handleQuestionTimeout() {
-    console.log(`Question ${this.currentQuestion} timed out`);
-
     // Clean up the current timer properly.
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
@@ -190,20 +189,8 @@ class GameRoom {
   }
 
   endGame() {
-    const gameScore = gameScoring.calculateScore();
-    return {
-      type: "gameEnd",
-      score: gameScore?.score || 0,
-      matchResults: gameScore?.matchResults || [],
-      compatibility: gameScore?.compatibility || {
-        level: "Low",
-        message: "Game ended without enough data",
-      },
-      summary: {
-        totalQuestions: gameScore?.totalQuestions || 0,
-        matchedAnswers: gameScore?.matchedAnswers || 0,
-      },
-    };
+    console.log("Game ended");
+    return gameScoring.calculateScore();
   }
 
   handleExpiry() {

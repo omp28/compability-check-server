@@ -1,58 +1,82 @@
 class GameScoring {
   constructor() {
     this.playerAnswers = new Map();
+    this.questions = [];
+    this.playerInfo = new Map();
   }
 
-  addAnswer(playerId, questionId, answer) {
-    if (!this.playerAnswers.has(playerId)) {
-      this.playerAnswers.set(playerId, []);
-    }
-
-    const playerAnswers = this.playerAnswers.get(playerId);
-    playerAnswers.push({
-      questionId,
-      answer,
-      timestamp: Date.now(),
+  initializeGame(questions, players) {
+    this.questions = questions;
+    players.forEach(([playerId, playerData]) => {
+      this.playerInfo.set(playerId, {
+        gender: playerData.gender,
+        answers: [],
+      });
     });
   }
 
-  calculateScore() {
-    if (this.playerAnswers.size !== 2) return null;
-
-    const players = Array.from(this.playerAnswers.keys());
-    const player1Answers = this.playerAnswers.get(players[0]) || [];
-    const player2Answers = this.playerAnswers.get(players[1]) || [];
-
-    const matchResults = [];
-    let matchedAnswers = 0;
-
-    const totalQuestions = Math.max(
-      player1Answers.length,
-      player2Answers.length
-    );
-
-    for (let i = 0; i < totalQuestions; i++) {
-      const p1Answer = player1Answers[i]?.answer;
-      const p2Answer = player2Answers[i]?.answer;
-
-      const matched = p1Answer === p2Answer;
-      if (matched) matchedAnswers++;
-
-      matchResults.push({
-        questionId: i,
-        matched,
-        playerAnswers: [p1Answer || "no answer", p2Answer || "no answer"],
-      });
+  addAnswer(playerId, questionId, answer) {
+    if (!this.playerInfo.has(playerId)) {
+      return false;
     }
 
-    const score = (matchedAnswers / totalQuestions) * 100;
+    const playerData = this.playerInfo.get(playerId);
+    playerData.answers[questionId] = {
+      answer,
+      timestamp: Date.now(),
+    };
+  }
+
+  calculateScore() {
+    if (this.playerInfo.size !== 2) return null;
+
+    const players = Array.from(this.playerInfo.keys());
+    const player1Data = this.playerInfo.get(players[0]);
+    const player2Data = this.playerInfo.get(players[1]);
+
+    const matchResults = this.questions.map((question, index) => {
+      const p1Answer = player1Data.answers[index]?.answer;
+      const p2Answer = player2Data.answers[index]?.answer;
+      const matched = p1Answer === p2Answer;
+
+      return {
+        questionId: index,
+        question: question.text,
+        options: question.options,
+        matched,
+        playerAnswers: {
+          [players[0]]: {
+            gender: player1Data.gender,
+            answer: p1Answer || "no answer",
+            answerText: p1Answer
+              ? question.options.find((opt) => opt.id === p1Answer)?.text
+              : "No answer provided",
+          },
+          [players[1]]: {
+            gender: player2Data.gender,
+            answer: p2Answer || "no answer",
+            answerText: p2Answer
+              ? question.options.find((opt) => opt.id === p2Answer)?.text
+              : "No answer provided",
+          },
+        },
+      };
+    });
+
+    const matchedAnswers = matchResults.filter(
+      (result) => result.matched
+    ).length;
+    const score = Math.round((matchedAnswers / this.questions.length) * 100);
 
     return {
-      totalQuestions,
-      matchedAnswers,
       score,
       matchResults,
       compatibility: this.getCompatibilityLevel(score),
+      summary: {
+        totalQuestions: this.questions.length,
+        matchedAnswers,
+        unmatchedQuestions: matchResults.filter((r) => !r.matched),
+      },
     };
   }
 
@@ -78,12 +102,10 @@ class GameScoring {
     }
   }
 
-  getAnswerHistory() {
-    return new Map(this.playerAnswers);
-  }
-
   clear() {
     this.playerAnswers.clear();
+    this.questions = [];
+    this.playerInfo.clear();
   }
 }
 
