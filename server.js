@@ -44,9 +44,7 @@ const socketConnections = new Map();
 
 io.use((socket, next) => {
   const clientIp = socket.handshake.address;
-  console.log("New connection from IP:", clientIp);
   const currentConnections = socketConnections.get(clientIp) || 0;
-  console.log("Current connections:", currentConnections);
 
   console.log("Max connections:", maxSocketsPerIP);
   if (currentConnections >= maxSocketsPerIP) {

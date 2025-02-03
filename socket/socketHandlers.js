@@ -1,6 +1,7 @@
 const { rooms } = require("../models/GameRoom");
 const socketService = require("../services/socket");
 const { questions } = require("../config/config");
+const { gifService } = require("../services/gifService");
 
 function setupSocketHandlers() {
   const io = socketService.getIO();
@@ -58,6 +59,29 @@ function setupSocketHandlers() {
             }
           }, 1000);
         }
+      }
+    });
+
+    socket.on("request_gif", async ({ roomCode, matchData }) => {
+      const room = rooms.get(roomCode);
+      if (!room) {
+        socket.emit("gif_error", "Room not found");
+        return;
+      }
+
+      // Notify both users
+      io.to(roomCode).emit("gif_generation_started");
+
+      const result = await gifService.generateGif(matchData);
+
+      if (result.success) {
+        // Broadcast the GIF URL
+        io.to(roomCode).emit("gif_generated", {
+          success: true,
+          url: result.data,
+        });
+      } else {
+        io.to(roomCode).emit("gif_error", result.error);
       }
     });
 
