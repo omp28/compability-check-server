@@ -2,6 +2,7 @@ const { rooms } = require("../models/GameRoom");
 const socketService = require("../services/socket");
 const { questions } = require("../config/config");
 const { gifService } = require("../services/gifService");
+const { planDateService } = require("../services/planDateService");
 
 function setupSocketHandlers() {
   const io = socketService.getIO();
@@ -62,27 +63,44 @@ function setupSocketHandlers() {
       }
     });
 
-    socket.on("request_gif", async ({ roomCode, matchData }) => {
+    socket.on("request_match_results", async ({ roomCode, matchData }) => {
       const room = rooms.get(roomCode);
       if (!room) {
-        socket.emit("gif_error", "Room not found");
+        socket.emit("match_results_error", "Room not found");
         return;
       }
 
-      // Notify both users
-      io.to(roomCode).emit("gif_generation_started");
+      // Start both processes independently
+      const gifPromise = (async () => {
+        try {
+          io.to(roomCode).emit("gif_generation_started");
+          const result = await gifService.generateGif(matchData);
+          io.to(roomCode).emit("gif_generated", {
+            success: true,
+            url: result.data,
+          });
+        } catch (error) {
+          io.to(roomCode).emit("gif_error", error.message);
+        }
+      })();
 
-      const result = await gifService.generateGif(matchData);
+      const datePlanPromise = (async () => {
+        try {
+          io.to(roomCode).emit("date_planning_started");
+          const datePlan = await planDateService.generateDatePlan(matchData);
+          io.to(roomCode).emit("date_plan_generated", {
+            success: true,
+            plan: datePlan,
+          });
+        } catch (error) {
+          io.to(roomCode).emit("date_plan_error", error.message);
+        }
+      })();
 
-      if (result.success) {
-        // Broadcast the GIF URL
-        io.to(roomCode).emit("gif_generated", {
-          success: true,
-          url: result.data,
-        });
-      } else {
-        io.to(roomCode).emit("gif_error", result.error);
-      }
+      // Let both processes run independently
+      Promise.allSettled([gifPromise, datePlanPromise]).then(() => {
+        io.to(roomCode).emit("all_results_complete");
+      });
     });
 
     socket.on("disconnect", () => {
