@@ -1,11 +1,15 @@
+const crypto = require("crypto");
+
 function generateRoomCode(rooms) {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const chars = "ACEFGHJKLPQRSTUVWXYZ23456789";
   let code;
+
   do {
-    code = Array.from({ length: 6 }, () =>
-      chars.charAt(Math.floor(Math.random() * chars.length))
-    ).join("");
+    code = Array.from(crypto.randomBytes(6))
+      .map((byte) => chars[byte % chars.length])
+      .join("");
   } while (rooms.has(code));
+
   return code;
 }
 
