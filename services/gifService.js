@@ -1,35 +1,26 @@
-const axios = require("axios");
+const fs = require("fs");
+const path = require("path");
 
 class GifGenerationService {
   constructor() {
-    this.videoBackendUrl = process.env.VIDEO_BACKEND_URL;
+    this.savedGifPath = path.join(__dirname, "bg-heart.gif");
   }
 
   async generateGif(matchData) {
     try {
-      const response = await axios.post(
-        `${this.videoBackendUrl}/api/generate-match-gif`,
-        matchData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (!response.data.success) {
-        throw new Error(response.data.error || "Failed to generate GIF");
-      }
+      // Read the file as base64
+      const gifBuffer = fs.readFileSync(this.savedGifPath);
+      const gifBase64 = gifBuffer.toString("base64");
 
       return {
         success: true,
-        data: response.data.data,
+        data: `data:image/gif;base64,${gifBase64}`,
       };
     } catch (error) {
-      console.error("GIF Generation Error:", error);
+      console.error("GIF Retrieval Error:", error);
       return {
         success: false,
-        error: "Failed to generate GIF",
+        error: "Failed to retrieve GIF",
       };
     }
   }
