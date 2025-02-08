@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "text": "How would I describe our first kiss?",
+    "options": [
+      { "id": "a", "text": "Magical and unforgettable ✨" },
+      { "id": "b", "text": "A bit awkward but cute 😳" },
+      { "id": "c", "text": "Passionate and intense ❤️‍🔥" },
+      { "id": "d", "text": "Unexpected but perfect 💋" }
+    ]
+  },
+  {
+    "id": 2,
+    "text": "What’s my idea of a perfect date night?",
+    "options": [
+      { "id": "a", "text": "A cozy movie night at home 🎬" },
+      { "id": "b", "text": "A romantic candlelight dinner 🍷" },
+      { "id": "c", "text": "An adventurous outdoor trip 🌄" },
+      { "id": "d", "text": "A surprise getaway ✈️" }
+    ]
+  },
+  {
+    "id": 3,
+    "text": "If I wrote a love letter to you, what would I most likely say?",
+    "options": [
+      { "id": "a", "text": "“You’re my world, and I can’t imagine life without you.” 🌎❤️" },
+      { "id": "b", "text": "“Every day with you feels like a dream.” 💭💕" },
+      { "id": "c", "text": "“You make my heart race faster than a rollercoaster.” 🎢💘" },
+      { "id": "d", "text": "“I fall for you more and more every single day.” 🍂😍" }
+    ]
+  },
+  {
+    "id": 4,
+    "text": "Which romantic gesture would melt my heart the most?",
+    "options": [
+      { "id": "a", "text": "A surprise love note hidden in my bag 💌" },
+      { "id": "b", "text": "A spontaneous forehead kiss 😘" },
+      { "id": "c", "text": "Breakfast in bed made with love 🥞💖" },
+      { "id": "d", "text": "A playlist of songs that remind you of me 🎶💞" }
+    ]
+  },
+  {
+    "id": 5,
+    "text": "If we could visit any romantic city together, where would I want to go?",
+    "options": [
+      { "id": "a", "text": "Paris, the city of love 🇫🇷❤️" },
+      { "id": "b", "text": "Venice, with its dreamy canals 🚣‍♂️💕" },
+      { "id": "c", "text": "Santorini, with breathtaking sunset views 🌅💙" },
+      { "id": "d", "text": "Kyoto, for a serene and beautiful escape 🍃🌸" }
+    ]
+  },
+  {
+    "id": 6,
+    "text": "What’s the best way to cheer me up when I’m feeling down?",
+    "options": [
+      { "id": "a", "text": "A warm, tight hug 🤗💖" },
+      { "id": "b", "text": "My favorite snack and a movie 🍫🎥" },
+      { "id": "c", "text": "A heartfelt talk and reassurance 🗣️❤️" },
+      { "id": "d", "text": "Taking me on a surprise date 🎡😍" }
+    ]
+  },
+  {
+    "id": 7,
+    "text": "If I had to compare our love to a movie genre, what would it be?",
+    "options": [
+      { "id": "a", "text": "A timeless romantic classic 🎬❤️" },
+      { "id": "b", "text": "A fun and quirky rom-com 😂💘" },
+      { "id": "c", "text": "A deep and emotional drama 🎭💓" },
+      { "id": "d", "text": "A magical fairytale ✨👑" }
+    ]
+  },
+  {
+    "id": 8,
+    "text": "What’s my favorite way to say ‘I love you’ without words?",
+    "options": [
+      { "id": "a", "text": "Holding your hand tightly 👫💞" },
+      { "id": "b", "text": "Cooking your favorite meal 🍲💖" },
+      { "id": "c", "text": "Sending cute random texts 📲😍" },
+      { "id": "d", "text": "Looking into your eyes and smiling 😍" }
+    ]
+  },
+  {
+    "id": 9,
+    "text": "If we could relive one special moment in our relationship, what would I choose?",
+    "options": [
+      { "id": "a", "text": "The day we first met 💘" },
+      { "id": "b", "text": "Our first “I love you” moment ❤️" },
+      { "id": "c", "text": "Our best vacation together ✈️💑" },
+      { "id": "d", "text": "A random, beautiful day we spent together 🌸😊" }
+    ]
+  },
+  {
+    "id": 10,
+    "text": "What’s something I love most about you?",
+    "options": [
+      { "id": "a", "text": "Your kindness and caring heart 💕" },
+      { "id": "b", "text": "Your sense of humor and fun personality 😂💖" },
+      { "id": "c", "text": "The way you always support me no matter what 🤝❤️" },
+      { "id": "d", "text": "Everything! You’re absolutely perfect to me 😘" }
+    ]
+  }
+]

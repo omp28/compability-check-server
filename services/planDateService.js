@@ -101,7 +101,27 @@ class PlanDateService {
 
   async generateDatePlan(matchData) {
     try {
-      const model = this.genAI.getGenerativeModel({ model: "gemini-pro" });
+      const model = this.genAI.getGenerativeModel({
+        model: "gemini-pro",
+        safetySettings: [
+          {
+            category: "HARM_CATEGORY_HARASSMENT",
+            threshold: "BLOCK_ONLY_HIGH",
+          },
+          {
+            category: "HARM_CATEGORY_HATE_SPEECH",
+            threshold: "BLOCK_ONLY_HIGH",
+          },
+          {
+            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            threshold: "BLOCK_ONLY_HIGH",
+          },
+          {
+            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+            threshold: "BLOCK_ONLY_HIGH",
+          },
+        ],
+      });
       const prompt = this.createPrompt(matchData);
       const result = await model.generateContent(prompt);
       const response = await result.response;
@@ -128,16 +148,18 @@ class PlanDateService {
         answer: result.playerAnswers.male.answerText,
       }));
 
-    return `Based on these matched preferences:
-    ${matchedAnswers.map((a) => `${a.question}: ${a.answer}`).join("\n")}
+    return `Please help create a fun date idea based on these shared interests and preferences:
+    ${matchedAnswers
+      .map((a) => `Interest: ${a.question}, Preference: ${a.answer}`)
+      .join("\n")}
     
-    Generate a JSON response which is totally positive with:
-    1. dateVibe: One-line Gen Z description of their perfect date (max 100 chars)
-    2. aesthetic: One aesthetic keyword that defines their relationship vibe
-    3. emoji: Single emoji that best represents their connection
-    4. coupleHashtag: Trendy couple hashtag based on their preferences
-    
-    Return just the JSON object without code blocks or backticks.`;
+    Please suggest a date plan in JSON format with these elements:
+    {
+      "dateVibe": "A brief, friendly description of a suitable date activity (max 100 chars)",
+      "aesthetic": "A single word describing the style",
+      "emoji": "A family-friendly Single emoji that best represents their connection",
+      "coupleHashtag": "A Trendy couple hashtag for social media tag"
+    }`;
   }
 
   parseResponse(text) {

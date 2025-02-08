@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "text": "How do you think conflicts should be resolved in a relationship?",
+    "options": [
+      { "id": "a", "text": "Talk it out immediately, no matter how heated it gets. 🗣️" },
+      { "id": "b", "text": "Take some time apart to cool down, then discuss rationally. ❄️" },
+      { "id": "c", "text": "One of us should compromise to keep the peace. ⚖️" },
+      { "id": "d", "text": "Let’s sleep on it and revisit when we’re calmer. 🌙" }
+    ]
+  },
+  {
+    "id": 2,
+    "text": "Which quality is most important in a long-term relationship?",
+    "options": [
+      { "id": "a", "text": "Trust—without it, there’s nothing. 🤝" },
+      { "id": "b", "text": "Emotional connection—we should always understand each other. ❤️" },
+      { "id": "c", "text": "Shared goals—we need to be heading in the same direction. 🎯" },
+      { "id": "d", "text": "Independence—love should allow personal growth too. 🌱" }
+    ]
+  },
+  {
+    "id": 3,
+    "text": "When making a big decision together, how should we approach it?",
+    "options": [
+      { "id": "a", "text": "Make a logical pros and cons list. 📊" },
+      { "id": "b", "text": "Trust our instincts and go with what feels right. ✨" },
+      { "id": "c", "text": "Let the person most affected by the decision take the lead. 🔄" },
+      { "id": "d", "text": "Debate until we both reach a common ground. ⚖️" }
+    ]
+  },
+  {
+    "id": 4,
+    "text": "What’s the best way to maintain a strong relationship over time?",
+    "options": [
+      { "id": "a", "text": "Regular deep conversations to stay connected. 💬" },
+      { "id": "b", "text": "Having shared experiences and adventures. ✈️" },
+      { "id": "c", "text": "Giving each other space and independence. 🚀" },
+      { "id": "d", "text": "Keeping romance and effort alive. 💖" }
+    ]
+  },
+  {
+    "id": 5,
+    "text": "Which of the following situations would challenge our relationship the most?",
+    "options": [
+      { "id": "a", "text": "Long-distance for a year. 🌍" },
+      { "id": "b", "text": "Financial struggles. 💰" },
+      { "id": "c", "text": "One of us changing career paths drastically. 🔄" },
+      { "id": "d", "text": "Disagreeing on major life goals. 🎯" }
+    ]
+  },
+  {
+    "id": 6,
+    "text": "How do you prefer to express love?",
+    "options": [
+      { "id": "a", "text": "Through words—saying “I love you” often. 💬" },
+      { "id": "b", "text": "Through actions—doing thoughtful things. 🎁" },
+      { "id": "c", "text": "Through physical closeness—hugs, cuddles, and kisses. 🤗" },
+      { "id": "d", "text": "Through quality time—being fully present with each other. ⏳" }
+    ]
+  },
+  {
+    "id": 7,
+    "text": "If one of us had a dream opportunity in another country, what should we do?",
+    "options": [
+      { "id": "a", "text": "Support them and find a way to make it work. 🌏" },
+      { "id": "b", "text": "Consider moving together if possible. ✈️" },
+      { "id": "c", "text": "Have a long-distance relationship and see how it goes. 💻" },
+      { "id": "d", "text": "Prioritize the relationship and discuss what’s best for both. 💬" }
+    ]
+  },
+  {
+    "id": 8,
+    "text": "What kind of balance do you think is ideal in a relationship?",
+    "options": [
+      { "id": "a", "text": "We should do almost everything together. 💑" },
+      { "id": "b", "text": "We should have a mix of togetherness and independence. ⚖️" },
+      { "id": "c", "text": "We should have individual lives but strong emotional connection. 🔗" },
+      { "id": "d", "text": "It should depend on the stage of the relationship. 🔄" }
+    ]
+  },
+  {
+    "id": 9,
+    "text": "Which of these challenges would we most likely argue about?",
+    "options": [
+      { "id": "a", "text": "Different communication styles. 🗣️" },
+      { "id": "b", "text": "Handling finances differently. 💳" },
+      { "id": "c", "text": "Different expectations for the future. 🔮" },
+      { "id": "d", "text": "Not spending enough quality time together. ⏳" }
+    ]
+  },
+  {
+    "id": 10,
+    "text": "If we had to define our relationship in one word, what would it be?",
+    "options": [
+      { "id": "a", "text": "Balanced ⚖️" },
+      { "id": "b", "text": "Exciting 🎢" },
+      { "id": "c", "text": "Supportive 🤝" },
+      { "id": "d", "text": "Evolving 🔄" }
+    ]
+  }
+]

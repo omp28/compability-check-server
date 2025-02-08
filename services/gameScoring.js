@@ -7,6 +7,8 @@ class GameScoring {
 
   initializeGame(questions, players) {
     this.questions = questions;
+    // this.questions = Array.isArray(questions) ? questions : [];
+
     players.forEach(([playerId, playerData]) => {
       this.playerInfo.set(playerId, {
         gender: playerData.gender,
@@ -29,6 +31,11 @@ class GameScoring {
 
   calculateScore() {
     if (this.playerInfo.size !== 2) return null;
+
+    if (!Array.isArray(this.questions)) {
+      console.error("Questions is not an array:", this.questions);
+      return null;
+    }
 
     const players = Array.from(this.playerInfo.keys());
     const player1Data = this.playerInfo.get(players[0]);

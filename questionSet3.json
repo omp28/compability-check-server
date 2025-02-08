@@ -1,0 +1,104 @@
+[
+  {
+    "id": 1,
+    "text": "If we were characters in a movie, what genre would our relationship be?",
+    "options": [
+      { "id": "a", "text": "A fast-paced action thriller 🎬🔥" },
+      { "id": "b", "text": "A feel-good romantic comedy 😍😂" },
+      { "id": "c", "text": "A deep and emotional drama 🎭💔" },
+      { "id": "d", "text": "A quirky sci-fi adventure 🚀👽" }
+    ]
+  },
+  {
+    "id": 2,
+    "text": "Which of these fictional couples are we most like?",
+    "options": [
+      { "id": "a", "text": "Chandler & Monica (Friends) – Playful but solid 🏠❤️" },
+      { "id": "b", "text": "Jim & Pam (The Office) – Sweet and wholesome 🥰" },
+      { "id": "c", "text": "Gomez & Morticia (The Addams Family) – Passionate and weird 🔥🖤" },
+      { "id": "d", "text": "Han Solo & Princess Leia (Star Wars) – Fiery but loving ✨💫" }
+    ]
+  },
+  {
+    "id": 3,
+    "text": "If we had to survive in a post-apocalyptic world, what role would each of us play?",
+    "options": [
+      { "id": "a", "text": "One of us leads, the other follows 🏹" },
+      { "id": "b", "text": "We’d both try to outsmart everyone and take control 🎭" },
+      { "id": "c", "text": "We’d chill in a safe house, avoiding trouble 🏠" },
+      { "id": "d", "text": "We’d form a team and take on the world together ⚔️" }
+    ]
+  },
+  {
+    "id": 4,
+    "text": "If I suddenly turned into a cat for a day, what would you do?",
+    "options": [
+      { "id": "a", "text": "Try to teach me tricks and see if I remember later 🐱🎩" },
+      { "id": "b", "text": "Panic and call a vet 😱📞" },
+      { "id": "c", "text": "Enjoy the peace and quiet for once 😌🐾" },
+      { "id": "d", "text": "Carry me everywhere and show me off 😍🐈" }
+    ]
+  },
+  {
+    "id": 5,
+    "text": "If we started a band together, what would be our style?",
+    "options": [
+      { "id": "a", "text": "A rock duo—loud, fun, and chaotic 🎸🔥" },
+      { "id": "b", "text": "A jazz group—classy and smooth 🎷✨" },
+      { "id": "c", "text": "A pop sensation—catchy and lovable 🎤💃" },
+      { "id": "d", "text": "A folk duo—laid-back and soulful 🎻🌿" }
+    ]
+  },
+  {
+    "id": 6,
+    "text": "If one of us had a secret superpower, what would it most likely be?",
+    "options": [
+      { "id": "a", "text": "Mind reading—because we always know what the other is thinking 🧠🔮" },
+      { "id": "b", "text": "Time travel—to go back and relive our best moments ⏳❤️" },
+      { "id": "c", "text": "Shape-shifting—to prank each other all the time 👻😆" },
+      { "id": "d", "text": "Super strength—to carry all the groceries in one trip 💪🛍️" }
+    ]
+  },
+  {
+    "id": 7,
+    "text": "If we had a time machine, where would we go?",
+    "options": [
+      { "id": "a", "text": "The future—to see how our lives turn out 🚀🔮" },
+      { "id": "b", "text": "The past—to relive our best memories 🎞️💕" },
+      { "id": "c", "text": "The dinosaur era—just for fun and chaos 🦖🔥" },
+      { "id": "d", "text": "Nowhere—we’d probably break the timeline 😬" }
+    ]
+  },
+  {
+    "id": 8,
+    "text": "If we were competing on a reality show, what would we be best at?",
+    "options": [
+      { "id": "a", "text": "A cooking competition—we make a great team in the kitchen 🍳🔥" },
+      { "id": "b", "text": "An escape room challenge—we’d solve puzzles like pros 🏆🕵️‍♂️" },
+      { "id": "c", "text": "A travel vlog competition—we’d be the coolest adventurers ✈️🌍" },
+      { "id": "d", "text": "A prank war show—we’d outwit everyone 😈🎭" }
+    ]
+  },
+  {
+    "id": 9,
+    "text": "If we could swap lives for a day, what would be the most surprising thing?",
+    "options": [
+      { "id": "a", "text": "How much nonsense I put up with daily 🙃" },
+      { "id": "b", "text": "How good (or bad) my time management actually is ⏳" },
+      { "id": "c", "text": "How much I overthink everything 🤯"},
+        { "id": "d", "text": "How weird my daily routine actually is 😂" }
+    ]
+    },
+    {
+    "id": 10,
+    "text": "What’s the most likely reason we’d get kicked out of a fancy event?",
+    "options": [
+      { "id": "a", "text": "Starting a dance-off in the middle of dinner 🕺💃" },
+      { "id": "b", "text": "Sneaking into the kitchen to taste-test everything 🍽️🍰" },
+      { "id": "c", "text": "Accidentally breaking something valuable 🙈💥" },
+      { "id": "d", "text": "Laughing too loudly at inappropriate jokes 😂🤭" }
+    ]   
+
+    }
+]
+

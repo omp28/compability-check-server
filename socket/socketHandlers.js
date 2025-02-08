@@ -29,7 +29,7 @@ function setupSocketHandlers() {
           socket.emit("game_state", {
             gameStatus: "waiting",
             currentQuestion: 0,
-            totalQuestions: questions.length,
+            totalQuestions: room.questions.length,
           });
         }
       } else {

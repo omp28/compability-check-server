@@ -1,6 +1,7 @@
 const { questions, roomExpiryTime } = require("../config/config");
 const socketService = require("../services/socket");
 const { gameScoring } = require("../services/gameScoring");
+// const { getRandomQuestions } = require("../config/config"); // Add this if you're using the function directly
 
 class GameRoom {
   constructor(roomCode, hostGender) {
@@ -15,6 +16,7 @@ class GameRoom {
     this.hostGender = hostGender;
     this.timeRemaining = 40;
     this.timerInterval = null;
+    this.questions = questions();
   }
 
   addPlayer(socketId, gender) {
@@ -44,7 +46,10 @@ class GameRoom {
   startGame() {
     this.gameStarted = true;
     this.currentQuestion = 0;
-    gameScoring.initializeGame(questions, Array.from(this.players.entries()));
+    gameScoring.initializeGame(
+      this.questions,
+      Array.from(this.players.entries())
+    );
     this.sendQuestion();
   }
 
@@ -72,12 +77,12 @@ class GameRoom {
   }
 
   sendQuestion() {
-    if (this.currentQuestion >= questions.length) {
+    if (this.currentQuestion >= this.questions.length) {
       this.endGame();
       return;
     }
 
-    const question = questions[this.currentQuestion];
+    const question = this.questions[this.currentQuestion];
     this.answers.clear();
     this.timeRemaining = 40;
 
@@ -102,7 +107,7 @@ class GameRoom {
       type: "question",
       question,
       currentQuestion: this.currentQuestion,
-      totalQuestions: questions.length,
+      totalQuestions: this.questions.length,
       timeRemaining: this.timeRemaining,
     };
 
@@ -189,7 +194,6 @@ class GameRoom {
   }
 
   endGame() {
-    console.log("Game ended");
     return gameScoring.calculateScore();
   }
 
@@ -210,7 +214,7 @@ class GameRoom {
   getGameState() {
     return {
       currentQuestion: this.currentQuestion,
-      totalQuestions: questions.length,
+      totalQuestions: this.questions.length,
       timeRemaining: this.timeRemaining,
       gameStatus: this.gameStarted ? "in_progress" : "waiting",
       partnerSubmitted: this.answers.size === 1,
