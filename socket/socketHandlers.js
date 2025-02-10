@@ -17,6 +17,46 @@ function setupSocketHandlers() {
         return;
       }
 
+      const existingPlayer = Array.from(room.players.entries()).find(
+        ([_, player]) => player.gender === gender
+      );
+
+      if (existingPlayer) {
+        // Update socket ID for reconnecting player
+        room.players.delete(existingPlayer[0]);
+        room.players.set(socket.id, {
+          gender,
+          connected: true,
+          answers: existingPlayer[1].answers,
+        });
+        socket.join(roomCode);
+        currentRoom = room;
+
+        // If both players are now connected, sync the game state
+        if (room.players.size === 2 && room.gameStarted) {
+          io.to(roomCode).emit("partner_connected");
+          const gameState = room.getGameState();
+          socket.emit("game_state", gameState);
+
+          // If there's an active question, send it
+          if (room.currentQuestion < room.questions.length) {
+            socket.emit("question", {
+              question: room.questions[room.currentQuestion],
+              currentQuestion: room.currentQuestion,
+              totalQuestions: room.questions.length,
+              timeRemaining: room.timeRemaining,
+            });
+          }
+        } else {
+          socket.emit("game_state", {
+            gameStatus: "waiting",
+            currentQuestion: 0,
+            totalQuestions: room.questions.length,
+          });
+        }
+        return;
+      }
+
       if (room.addPlayer(socket.id, gender)) {
         currentRoom = room;
         socket.join(roomCode);
@@ -105,7 +145,7 @@ function setupSocketHandlers() {
 
     socket.on("disconnect", () => {
       if (currentRoom) {
-        currentRoom.removePlayer(socket.id);
+        // currentRoom.removePlayer(socket.id);
         socket.to(currentRoom.roomCode).emit("partner_disconnected");
       }
     });
