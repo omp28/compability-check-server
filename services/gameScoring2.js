@@ -1,49 +1,49 @@
 class GameScoring {
   constructor() {
+    this.playerAnswers = new Map();
     this.questions = [];
-    this.players = new Map();
-    this.answers = new Map();
-    this.summary = null;
+    this.playerInfo = new Map();
   }
 
   initializeGame(questions, players) {
     this.questions = questions;
-    this.players = new Map(players);
-    this.answers = new Map();
-    this.summary = null;
+    // this.questions = Array.isArray(questions) ? questions : [];
 
-    // Initialize answer storage for each player with timestamps
-    for (const [socketId] of this.players) {
-      this.answers.set(socketId, new Array(questions.length).fill(null));
-    }
+    players.forEach(([playerId, playerData]) => {
+      this.playerInfo.set(playerId, {
+        gender: playerData.gender,
+        answers: [],
+      });
+    });
   }
 
-  addAnswer(socketId, questionIndex, answer) {
-    if (!this.answers.has(socketId)) {
-      this.answers.set(socketId, new Array(this.questions.length).fill(null));
+  addAnswer(playerId, questionId, answer) {
+    if (!this.playerInfo.has(playerId)) {
+      return false;
     }
 
-    const playerAnswers = this.answers.get(socketId);
-    playerAnswers[questionIndex] = {
+    const playerData = this.playerInfo.get(playerId);
+    playerData.answers[questionId] = {
       answer,
       timestamp: Date.now(),
     };
-    this.answers.set(socketId, playerAnswers);
   }
 
   calculateScore() {
-    const players = Array.from(this.players.entries());
-    if (players.length !== 2) return null;
+    if (this.playerInfo.size !== 2) return null;
 
-    const [player1Id, player2Id] = players.map(([id]) => id);
-    const player1Answers = this.answers.get(player1Id);
-    const player2Answers = this.answers.get(player2Id);
+    if (!Array.isArray(this.questions)) {
+      console.error("Questions is not an array:", this.questions);
+      return null;
+    }
 
-    if (!player1Answers || !player2Answers) return null;
+    const players = Array.from(this.playerInfo.keys());
+    const player1Data = this.playerInfo.get(players[0]);
+    const player2Data = this.playerInfo.get(players[1]);
 
     const matchResults = this.questions.map((question, index) => {
-      const p1Answer = player1Answers[index]?.answer;
-      const p2Answer = player2Answers[index]?.answer;
+      const p1Answer = player1Data.answers[index]?.answer;
+      const p2Answer = player2Data.answers[index]?.answer;
       const matched = p1Answer === p2Answer;
 
       return {
@@ -52,15 +52,15 @@ class GameScoring {
         options: question.options,
         matched,
         playerAnswers: {
-          [player1Id]: {
-            gender: this.players.get(player1Id).gender,
+          [players[0]]: {
+            gender: player1Data.gender,
             answer: p1Answer || "no answer",
             answerText: p1Answer
               ? question.options.find((opt) => opt.id === p1Answer)?.text
               : "No answer provided",
           },
-          [player2Id]: {
-            gender: this.players.get(player2Id).gender,
+          [players[1]]: {
+            gender: player2Data.gender,
             answer: p2Answer || "no answer",
             answerText: p2Answer
               ? question.options.find((opt) => opt.id === p2Answer)?.text
@@ -75,7 +75,7 @@ class GameScoring {
     ).length;
     const score = Math.round((matchedAnswers / this.questions.length) * 100);
 
-    this.summary = {
+    return {
       score,
       matchResults,
       compatibility: this.getCompatibilityLevel(score),
@@ -85,8 +85,6 @@ class GameScoring {
         unmatchedQuestions: matchResults.filter((r) => !r.matched),
       },
     };
-
-    return this.summary;
   }
 
   getCompatibilityLevel(score) {
@@ -112,14 +110,9 @@ class GameScoring {
   }
 
   clear() {
+    this.playerAnswers.clear();
     this.questions = [];
-    this.players = new Map();
-    this.answers = new Map();
-    this.summary = null;
-  }
-
-  getSummary() {
-    return this.summary;
+    this.playerInfo.clear();
   }
 }
 

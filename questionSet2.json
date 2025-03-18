@@ -23,10 +23,10 @@
     "id": 3,
     "text": "If I wrote a love letter to you, what would I most likely say?",
     "options": [
-      { "id": "a", "text": "“You’re my world, and I can’t imagine life without you.” 🌎❤️" },
-      { "id": "b", "text": "“Every day with you feels like a dream.” 💭💕" },
-      { "id": "c", "text": "“You make my heart race faster than a rollercoaster.” 🎢💘" },
-      { "id": "d", "text": "“I fall for you more and more every single day.” 🍂😍" }
+      { "id": "a", "text": "You’re my world, and I can’t imagine life without you.” 🌎❤️" },
+      { "id": "b", "text": "Every day with you feels like a dream.” 💭💕" },
+      { "id": "c", "text": "You make my heart race faster than a rollercoaster.” 🎢💘" },
+      { "id": "d", "text": "I fall for you more and more every single day.” 🍂😍" }
     ]
   },
   {

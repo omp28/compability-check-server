@@ -1,6 +1,8 @@
+
 require("dotenv").config();
 const express = require("express");
-const http = require("http");
+const https = require("https");
+const fs = require("fs");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -18,7 +20,16 @@ const socketService = require("./services/socket");
 const serverMonitor = require("./utils/monitoring");
 
 const app = express();
-const server = http.createServer(app);
+
+// Load SSL Certificates
+const certPath = "/home/azureuser/code/compability-check-server/certificate/";
+const credentials = {
+  key: fs.readFileSync(certPath + "privkey.pem"),
+  cert: fs.readFileSync(certPath + "fullchain.pem"),
+};
+
+const server = require("http").createServer(app);
+
 
 app.use(helmet());
 app.use(cors({ origin: corsOrigin, methods: ["GET", "POST"] }));
@@ -68,7 +79,7 @@ socketService.init(io);
 setupSocketHandlers(io);
 
 server.listen(port, "0.0.0.0", () => {
-  console.log(`Server running on port ${port}`);
+  console.log(`Secure server running on port ${port}`);
 });
 
 process.on("SIGTERM", () => {

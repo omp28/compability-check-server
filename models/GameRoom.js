@@ -1,3 +1,4 @@
+
 const { questions, roomExpiryTime } = require("../config/config");
 const socketService = require("../services/socket");
 const { gameScoring } = require("../services/gameScoring");
@@ -36,12 +37,22 @@ class GameRoom {
     return true;
   }
 
-  removePlayer(socketId) {
-    this.players.delete(socketId);
-    if (this.players.size === 0) {
-      this.cleanup();
+	removePlayer(socketId) {
+    const player = this.players.get(socketId);
+    if (player) {
+      player.connected = false;
+      // Set a reconnection window instead of immediate deletion
+      setTimeout(() => {
+        if (!player.connected) {
+          this.players.delete(socketId);
+          if (this.players.size === 0) {
+            this.cleanup();
+          }
+        }
+      }, 50000); // 30 second reconnection window
     }
   }
+  
 
   startGame() {
     this.gameStarted = true;
